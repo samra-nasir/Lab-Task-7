@@ -1,0 +1,167 @@
+<html>
+<head>
+
+	<style>
+	.head-div{
+		width: 98%;
+		background-color: black;
+		padding: 1%;
+		visibility: visible;
+	
+	}
+
+	#form-maker{
+		width: 98%;
+		background-color: grey;
+		padding: 1%;
+		visibility: hidden;
+
+	}
+
+	#form-view{
+		width: 98%;
+		padding: 1%;
+		visibility: hidden;
+
+	}
+
+	a{
+		text-decoration: none;
+		color: white;
+		padding: 1%;
+
+	}
+	</style>
+
+
+	
+
+
+
+<head>
+
+<body>
+<div class="head-div"><button onclick="formOptions()">Create Form</button></div>
+
+<div id="form-maker">
+	<a href="#" onclick="createText()">Add Text Input</a>
+	<a href="#" onclick="createPassword()">Add Password Field</a>
+	<a href="#" onclick="createRadio()">Add Radio Buttons</a>
+	<a href="#" onclick="createCheck()">Add Checkboxes</a>
+	<a href="#" onclick="create()">Submit</a>
+
+</div>
+<div id="form-view">
+
+</div>
+
+
+	<script>
+
+		var ihtml = "";
+		var jsonfile ="";
+
+		var fv = document.getElementById("form-view");
+
+
+		function formOptions(){	
+
+			var fm = document.getElementById("form-maker");
+			
+			if(fm.style.visibility==""){
+				var form_name = prompt("Enter form name", "");
+
+				ihtml = ihtml + "<h1><center>"+form_name+"<center></h1><form>";
+				fv.innerHTML = ihtml;
+				fm.style.visibility= "visible";	
+				fv.style.visibility= "visible";	
+
+				jsonfile = jsonfile + "{'"+form_name + "': [";
+			}
+
+			else
+				alert("Form already created.");
+				
+		}
+
+		function createText(){	
+
+			var text_name = prompt("Enter text field name","");
+
+			ihtml = ihtml + text_name + ": <input type='text' style='margin:5px'><br>";
+			fv.innerHTML = ihtml;
+			jsonfile = jsonfile + "{'Name': '"+form_name + "','Type': 'text'},";
+		}
+
+
+		function createPassword(){	
+
+			var password_name = prompt("Enter text for password field","");
+
+			ihtml = ihtml + password_name + ": <input type='password' style='margin:5px'><br>";
+			fv.innerHTML = ihtml;
+			jsonfile = jsonfile + "{'Name': '"+password_name + "','Type': 'password'},";
+				
+		}
+
+
+		function createRadio(){	
+
+			var radio_name = prompt("Enter Label for radio buttons","");
+			ihtml = ihtml + radio_name + ":<br>";
+			var radio_option;
+			var o = true;
+			jsonfile = jsonfile + "{'Name': '"+radio_name + "','Type': 'label'},";
+
+			while(o==true){
+				radio_option = prompt("Enter Option","");
+				ihtml = ihtml + "<input type='radio' id='"+radio_option+ "' name= '" +radio_name+"'> "+radio_option+"<br>";
+				fv.innerHTML = ihtml;
+				jsonfile = jsonfile + "{'Name': '"+radio_option + "','Type': 'radio'},";
+				o = confirm("Do you want to add another option?");
+				
+			}
+
+		}
+
+
+		function createCheck(){	
+
+			var check_name = prompt("Enter Label for check options","");
+			ihtml = ihtml + check_name + ":<br>";
+			var check_option;
+			var o = true;
+			jsonfile = jsonfile + "{'Name': '"+check_name + "','Type': 'label'},";
+
+			while(o==true){
+				check_option = prompt("Enter Option","");
+				ihtml = ihtml + "<input type='checkbox' id='"+check_option+ "' name= '" +check_name+"'> "+check_option+"<br>";
+				fv.innerHTML = ihtml;
+				jsonfile = jsonfile + "{'Name': '"+check_option + "','Type': 'checkbox'},";
+				o = confirm("Do you want to add another option?");
+				
+			}
+
+		}
+
+		function create(){	
+			jsonfile = jsonfile + "]}";
+
+			//var doc = userhome.createFile("C:\Users\snasir.bese13seecs\Desktop\checkmeout.txt");
+			//doc.addAspect("cm:versionable");
+			//doc.content = jsonfile;
+
+			var txtFile = new File("abc.txt");
+			txtFile.open("w");
+			txtFile.writeln(jsonfile);
+			txtFile.close();
+				
+		}
+
+
+	</script>
+	
+
+</body>
+
+</html>
